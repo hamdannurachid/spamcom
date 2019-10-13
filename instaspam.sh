@@ -36,11 +36,11 @@ fi
 config() {
 
 IFS=$'\n'
-default_amount="200"
+default_amount="1000"
 default_message="InstaSpam"
 read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Message: ' message
 message="${message:-${default_message}}"
-read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Amount message (Default: 200): ' amount
+read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Amount message (Default: 1000): ' amount
 amount="${amount:-${default_amount}}"
 
 }
@@ -79,7 +79,7 @@ for i in $(seq 1 $amount); do
 printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Sending message:\e[0m\e[1;93m %s\e[0m\e[1;77m/\e[0m\e[1;93m%s ... \e[0m" $i $amount
 IFS=$'\n'
 
-comment=$(curl  -i -s -k  -X $'POST'     -H $'Host: www.instagram.com' -H $'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -H $'Accept: */*' -H $'Accept-Language: en-US,en;q=0.5' -H $'Accept-Encoding: gzip, deflate'  -H $'X-CSRFToken:'$csrftoken'' -H $'X-Instagram-AJAX: 9de6d949df8f' -H $'Content-Type: application/x-www-form-urlencoded' -H $'X-Requested-With: XMLHttpRequest' -H $'Cookie: csrftoken='$csrftoken'; ' -H $'Connection: close'     -b cookies.txt     --data-binary $'comment_text='$message' &replied_to_comment_id='     $'https://www.instagram.com/web/comments/'$media_id'/add/' -w "\n%{http_code}\n" | grep -a "HTTP/2 200"); if [[ "$comment" == *'HTTP/2 200'* ]]; then printf "\e[1;92mOK!\e[0m\n";  printf "%s\n" $media_id >> commented.txt ; else printf "\e[1;93mFAIL!\e[0m \e[1;77mSleeping 300 secs...\e[0m\n"; sleep 300;  fi; 
+comment=$(curl  -i -s -k  -X $'POST'     -H $'Host: www.instagram.com' -H $'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -H $'Accept: */*' -H $'Accept-Language: en-US,en;q=0.5' -H $'Accept-Encoding: gzip, deflate'  -H $'X-CSRFToken:'$csrftoken'' -H $'X-Instagram-AJAX: 9de6d949df8f' -H $'Content-Type: application/x-www-form-urlencoded' -H $'X-Requested-With: XMLHttpRequest' -H $'Cookie: csrftoken='$csrftoken'; ' -H $'Connection: close'     -b cookies.txt     --data-binary $'comment_text='$message' &replied_to_comment_id='     $'https://www.instagram.com/web/comments/'$media_id'/add/' -w "\n%{http_code}\n" | grep -a "HTTP/2 200"); if [[ "$comment" == *'HTTP/2 200'* ]]; then printf "\e[1;92mOK!\e[0m\n";  printf "%s\n" $media_id >> commented.txt ; else printf "\e[1;93mFAIL!\e[0m \e[1;77mSleeping 120 secs...\e[0m\n"; sleep 120;  fi; 
 sleep 1
 let count++
 done
