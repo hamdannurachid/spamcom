@@ -36,11 +36,11 @@ fi
 config() {
 
 IFS=$'\n'
-default_amount="1000"
+default_amount="100"
 default_message="InstaSpam"
 read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Message: ' message
 message="${message:-${default_message}}"
-read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Amount message (Default: 1000): ' amount
+read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Amount message (Default: 100): ' amount
 amount="${amount:-${default_amount}}"
 
 }
