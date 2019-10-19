@@ -71,7 +71,7 @@ amount="${amount:-${default_amount}}"
 
 # media_id=$(sed ''$post'q;d' media_id)
 
-}
+# }
 
 flood() {
 
